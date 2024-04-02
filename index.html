@@ -3,7 +3,10 @@
 
 <head>
     <link rel="stylesheet" href="base-style.css" />
-    <script src="js/scripts.js"></script>
+
+    <script src="js/page.js"></script>
+    <script src="js/profile.js"></script>
+
     <title>HTML Example Site - Get Coding Module 1</title>
 </head>
 
@@ -21,14 +24,35 @@
                 </ul>
             </div>
 
+            <!-- Home Page -->
             <div class="content" id="home">
                 <h2>Home</h2>
                 <p>Welcome to the home page of our site. This is where you can find information about our company and
                     what we do.</p>
             </div>
+
+            <!-- Profile Page -->
             <div class="content" id="profile" style="display: none;">
                 <h2>Profile</h2>
+                <form id="profileForm">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <label for="duck">Best Fictional Duck:</label>
+                    <select id="duck" name="duck">
+                        <option value="donald">Donald</option>
+                        <option value="daffy">Daffy</option>
+                        <option value="darkwing">Darkwing</option>
+                        <option value="huey">Huey</option>
+                        <option value="dewey">Dewey</option>
+                        <option value="louie">Louie</option>
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
             </div>
+
+            <!-- Colors Page -->
             <div class="content" id="colors" style="display: none;">
                 <h2>Colors</h2>
             </div>
