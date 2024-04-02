@@ -3,7 +3,8 @@
 
 <head>
     <link rel="stylesheet" href="base-style.css" />
-    <script src="scripts.js"></script>
+    <script src="js/scripts.js"></script>
+    <title>HTML Example Site - Get Coding Module 1</title>
 </head>
 
 <body>
@@ -14,10 +15,22 @@
         <div class="main">
             <div class="sidebar">
                 <h2>Sidebar</h2>
+                <ul>
+                    <li><a href="#" onclick="showContent('profile')">Profile</a></li>
+                    <li><a href="#" onclick="showContent('colors')">Colors</a></li>
+                </ul>
             </div>
 
-            <div class="content">
-                <h2>Content</h2>
+            <div class="content" id="home">
+                <h2>Home</h2>
+                <p>Welcome to the home page of our site. This is where you can find information about our company and
+                    what we do.</p>
+            </div>
+            <div class="content" id="profile" style="display: none;">
+                <h2>Profile</h2>
+            </div>
+            <div class="content" id="colors" style="display: none;">
+                <h2>Colors</h2>
             </div>
         </div>
         <footer>
