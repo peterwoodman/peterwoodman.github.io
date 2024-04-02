@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Load data from localStorage if available
     const userProfileString = localStorage.getItem('userProfile');
-    console.log(userProfileString);
     if (userProfileString) {
         const userProfile = JSON.parse(userProfileString);
 
