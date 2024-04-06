@@ -48,6 +48,43 @@ footer {
     background-color: #ddd;
 }
 
+/* Define a class for colored square bullet points */
+.category-item::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    /* Adjust the size of the square */
+    height: 10px;
+    /* Adjust the size of the square */
+    background-color: transparent;
+    /* Default color */
+    margin-right: 10px;
+    /* Adjust spacing between the square and text */
+    border: 1px solid black;
+    /* Border for the square */
+}
+
+/* Define colors for different categories */
+.blue::before {
+    background-color: blue;
+    /* Blue color */
+}
+
+.green::before {
+    background-color: green;
+    /* Green color */
+}
+
+.gray::before {
+    background-color: gray;
+    /* Gray color */
+}
+
+.red::before {
+    background-color: red;
+    /* Red color */
+}
+
 .content {
     flex: 1;
     padding: 20px;

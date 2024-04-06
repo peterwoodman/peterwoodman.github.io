@@ -25,38 +25,93 @@ var categoriesHeader = null;
 var categoriesList = null;
 var backButton = null;
 var sidebar = null;
+var categoryNotes = [];
+var selectedCategory = null;
 
 var path = [];
 
-const savedText = localStorage.getItem('autosave_text');
+function saveNotes() {
+    localStorage.setItem(`notes_${selectedCategory.name}`, JSON.stringify(categoryNotes));
+}
 
-function selectCategory(index, category) {
+function loadNotes() {
+    categoryNotes = JSON.parse(localStorage.getItem(`notes_${selectedCategory.name}`)) || [];
+}
 
-    // Display notes:
+function focusLastTextarea() {
+    const textareas = document.querySelectorAll('.note-text');
+    if (textareas.length > 0) {
+        const lastTextarea = textareas[textareas.length - 1];
+        lastTextarea.focus();
+    }
+}
+
+function displayNotes() {
+
+    const notesList = document.getElementById('noteList');
+    notesList.innerHTML = '';
+
+    console.log(categoryNotes);
+    categoryNotes.forEach((note, noteIndex) => {
+        // Create a list item for the note
+        const li = document.createElement('li');
+        li.classList.add('note-item');
+
+        // Create an editable textarea for the note content
+        const textarea = document.createElement('textarea');
+        textarea.value = note.content;
+        textarea.placeholder = 'Enter your note here';
+        textarea.classList.add('note-text');
+        textarea.addEventListener('input', () => {
+            categoryNotes[noteIndex].content = textarea.value;
+            saveNotes();
+        });
+
+        // Create a delete button for the note
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.classList.add('delete-button');
+        deleteButton.addEventListener('click', () => {
+            categoryNotes.splice(noteIndex, 1);
+            saveNotes();
+            li.remove();
+        });
+
+        li.appendChild(textarea);
+        li.appendChild(deleteButton);
+        notesList.appendChild(li);
+    });
+
+    focusLastTextarea();
+}
 
 
-    // Update sidebar:
-    path.push(index);
-
-    renderCategory(category);
+function selectCategory(category) {
+    selectedCategory = category;
+    loadNotes();
+    displayNotes();
+    renderCategory();
 }
 
 function createCategoryListItem(index, category) {
     const li = document.createElement('li');
-    li.classList.add('category');
+    li.classList.add('category-item');
     li.textContent = category.name;
-    li.style.color = category.color;
+    li.classList.add(category.color);
     categoriesList.appendChild(li);
-    li.addEventListener('click', () => selectCategory(index, category));
+    li.addEventListener('click', () => {
+        path.push(index);
+        selectCategory(category)
+    });
 }
 
 function clearCategoryList() {
     categoriesList.innerHTML = '';
 }
 
-function renderCategory(category) {
-    const childCategories = category.children || [];
-    categoriesHeader.textContent = category.name;
+function renderCategory() {
+    const childCategories = selectedCategory.children || [];
+    categoriesHeader.textContent = selectedCategory.name;
     clearCategoryList();
     childCategories.forEach((child, index) => {
         createCategoryListItem(index, child);
@@ -71,8 +126,10 @@ function goBack() {
     // Remove the last index from the path
     path.pop();
 
+    console.log(path);
+
     // Reset the categories list to render the parent categories
-    renderCategory(getParentFromPath());
+    selectCategory(getParentFromPath());
 }
 
 function getParentFromPath() {
@@ -102,17 +159,22 @@ document.addEventListener('DOMContentLoaded', function () {
     backButton = document.getElementById('backButton');
     categoriesHeader = document.getElementById('categoriesHeader');
 
-    // If there's a saved value, set the input value to it
-    if (savedText) {
-        document.getElementById('textInput').value = savedText;
-    }
+    path.push(0);
+    selectCategory(categories);
 
-    // Add an event listener to the input to save its value to localStorage on change
-    document.getElementById('textInput').addEventListener('input', function () {
-        localStorage.setItem('autosave_text', this.value);
+    const addNoteButton = document.getElementById('addNoteButton');
+    addNoteButton.addEventListener('click', () => {
+        categoryNotes.push({ content: '' });
+        saveNotes();
+        displayNotes();
     });
 
-    selectCategory(0, categories);
+    /*  // Add an event listener to the input to save its value to localStorage on change
+      document.getElementById('textInput').addEventListener('input', function () {
+          localStorage.setItem('autosave_text', this.value);
+      });
+  */
+
 
     backButton.addEventListener('click', () => {
         goBack();
