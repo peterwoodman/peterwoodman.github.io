@@ -34,6 +34,20 @@ footer {
     padding: 20px;
 }
 
+#categories {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category {
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.category:hover {
+    background-color: #ddd;
+}
+
 .content {
     flex: 1;
     padding: 20px;
