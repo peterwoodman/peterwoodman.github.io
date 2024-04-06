@@ -6,6 +6,7 @@
 
     <script src="js/page.js"></script>
     <script src="js/profile.js"></script>
+    <script src="js/notes.js"></script>
 
     <title>HTML Example Site - Get Coding Module 1</title>
 </head>
@@ -21,6 +22,7 @@
                 <ul>
                     <li><a href="#" onclick="showContent('profile')">Profile</a></li>
                     <li><a href="#" onclick="showContent('colors')">Colors</a></li>
+                    <li><a href="#" onclick="showContent('notes')">Notes</a></li>
                 </ul>
             </div>
 
@@ -55,6 +57,12 @@
             <!-- Colors Page -->
             <div class="content" id="colors" style="display: none;">
                 <h2>Colors</h2>
+            </div>
+
+            <!-- Notes Page -->
+            <div class="content" id="notes" style="display: none;">
+                <h2>Notes</h2>
+                <textarea id="textInput" placeholder="Type something..."></textarea>
             </div>
         </div>
         <footer>
