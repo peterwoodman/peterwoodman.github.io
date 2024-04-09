@@ -160,3 +160,8 @@ textarea:focus {
     border-color: dodgerblue;
     box-shadow: 0 0 5px dodgerblue;
 }
+
+#addCategoryButton {
+    display: block;
+    margin-top: 10px;
+}

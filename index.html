@@ -4,9 +4,10 @@
 <head>
     <link rel="stylesheet" href="base-style.css?v=1" />
 
-    <script src="js/page.js"></script>
-    <script src="js/profile.js"></script>
-    <script src="js/notes.js"></script>
+    <script type="module" src="js/page.js"></script>
+    <script type="module" src="js/profile.js"></script>
+    <script type="module" src="js/notes.js"></script>
+    <script type="module" src="js/categories.js"></script>
 
     <title>HTML Example Site - Get Coding Module 1</title>
 </head>
@@ -19,19 +20,15 @@
         <div class="main">
             <div class="sidebar">
                 <h2>Sidebar</h2>
-                <ul>
-                    <li><a href="#" onclick="showContent('profile')">Profile</a></li>
-                    <li><a href="#" onclick="showContent('colors')">Colors</a></li>
-                    <li><a href="#" onclick="showContent('notes')">Notes</a></li>
-                </ul>
 
                 <h2 id="categoriesHeader">Unsorted</h2>
                 <button id="backButton">Back</button>
                 <ul id="categories"></ul>
+                <button id="addCategoryButton">Add</button>
             </div>
 
             <!-- Home Page -->
-            <div class="content" id="home">
+            <div class="content" id="home" style="display: none;">
                 <h2>Home</h2>
                 <p>Welcome to the home page of our site. This is where you can find information about our company and
                     what we do.</p>
@@ -64,7 +61,7 @@
             </div>
 
             <!-- Notes Page -->
-            <div class="content" id="notes" style="display: none;">
+            <div class="content" id="notes">
                 <h2>Notes</h2>
                 <div id="noteList"></div>
                 <button id="addNoteButton">Add Note</button>
