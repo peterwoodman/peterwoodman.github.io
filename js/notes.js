@@ -5,6 +5,7 @@ import { selectedCategory } from './categories.js';
 var activeNotes = [];
 
 var colorBar = null;
+var notesList = null;
 
 
 function saveNotes() {
@@ -28,55 +29,60 @@ function autoResizeHeight(textarea) {
     textarea.style.height = (textarea.scrollHeight) + 'px';
 }
 
+function addDisplayNote(note, noteIndex) {
+    // Create a list item for the note
+    const li = document.createElement('li');
+    li.classList.add('note-item');
+
+    const containerDiv = document.createElement('div');
+    containerDiv.classList.add('container-div');
+
+    // Create an editable textarea for the note content
+    const textarea = document.createElement('textarea');
+    textarea.value = note.content;
+    textarea.placeholder = 'Enter your note here';
+    textarea.addEventListener('input', () => {
+        activeNotes[noteIndex].content = textarea.value;
+        saveNotes();
+        autoResizeHeight(textarea);
+    });
+    setTimeout(function () {
+        autoResizeHeight(textarea);
+    }, 0);
+
+    // Create a delete button for the note
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-button');
+    deleteButton.addEventListener('click', () => {
+        activeNotes.splice(noteIndex, 1);
+        saveNotes();
+        li.remove();
+    });
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.classList.add('svg-icon');
+    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', './images/delete.svg#icon');
+    svg.appendChild(use);
+    deleteButton.appendChild(svg);
+
+    containerDiv.appendChild(textarea);
+    containerDiv.appendChild(deleteButton);
+
+    li.appendChild(containerDiv);
+    notesList.appendChild(li);
+}
+
+
 export function displayNotes() {
 
-    const notesList = document.getElementById('noteList');
+    notesList = document.getElementById('noteList');
     notesList.innerHTML = '';
 
     if (!colorBar) colorBar = document.getElementById('colorBar');
     colorBar.className = selectedCategory.color;
 
     activeNotes.forEach((note, noteIndex) => {
-        // Create a list item for the note
-        const li = document.createElement('li');
-        li.classList.add('note-item');
-
-        const containerDiv = document.createElement('div');
-        containerDiv.classList.add('container-div');
-
-        // Create an editable textarea for the note content
-        const textarea = document.createElement('textarea');
-        textarea.value = note.content;
-        textarea.placeholder = 'Enter your note here';
-        textarea.addEventListener('input', () => {
-            activeNotes[noteIndex].content = textarea.value;
-            saveNotes();
-            autoResizeHeight(textarea);
-        });
-        setTimeout(function () {
-            autoResizeHeight(textarea);
-        }, 0);
-
-        // Create a delete button for the note
-        const deleteButton = document.createElement('button');
-        deleteButton.classList.add('delete-button');
-        deleteButton.addEventListener('click', () => {
-            activeNotes.splice(noteIndex, 1);
-            saveNotes();
-            li.remove();
-        });
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.classList.add('svg-icon');
-        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-        use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', './images/delete.svg#icon');
-        svg.appendChild(use);
-        deleteButton.appendChild(svg);
-
-        containerDiv.appendChild(textarea);
-        containerDiv.appendChild(deleteButton);
-
-        li.appendChild(containerDiv);
-        notesList.appendChild(li);
+        addDisplayNote(note, noteIndex);
     });
 
     focusLastTextarea();
@@ -87,8 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const addNoteButton = document.getElementById('addNoteButton');
     addNoteButton.addEventListener('click', () => {
         activeNotes.push({ content: '' });
-        saveNotes();
-        displayNotes();
+        addDisplayNote(activeNotes[activeNotes.length - 1], activeNotes.length - 1);
     });
 
 
