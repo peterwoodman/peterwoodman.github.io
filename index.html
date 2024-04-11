@@ -19,10 +19,16 @@
             <div class="sidebar">
                 <h1>Quick Notes</h1>
                 <button id="backButton">
-                    <img src="./images/back.svg" alt="Back" width="24" height="24" />
+                    <svg class="svg-icon" alt="back">
+                        <use xlink:href="./images/back.svg#icon"></use>
+                    </svg>
                 </button>
                 <ul id="categories"></ul>
-                <button id="addCategoryButton">Add</button>
+                <button id="addCategoryButton">
+                    <svg class="svg-icon" alt="add">
+                        <use xlink:href="./images/addCategory.svg#icon"></use>
+                    </svg>
+                </button>
             </div>
 
             <!-- Notes Page -->
@@ -31,7 +37,9 @@
                 <h2 id="categoriesHeader">Unsorted</h2>
                 <div id="noteList"></div>
                 <button id="addNoteButton">
-                    <img src="./images/addNote.svg" alt="Add Note" width="24" height="24" />
+                    <svg class="svg-icon" alt="add">
+                        <use xlink:href="./images/addNote.svg#icon"></use>
+                    </svg>
                 </button>
             </div>
         </div>

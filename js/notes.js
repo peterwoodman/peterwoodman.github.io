@@ -23,6 +23,11 @@ function focusLastTextarea() {
     }
 }
 
+function autoResizeHeight(textarea) {
+    textarea.style.height = 'auto';
+    textarea.style.height = (textarea.scrollHeight) + 'px';
+}
+
 export function displayNotes() {
 
     const notesList = document.getElementById('noteList');
@@ -36,6 +41,9 @@ export function displayNotes() {
         const li = document.createElement('li');
         li.classList.add('note-item');
 
+        const containerDiv = document.createElement('div');
+        containerDiv.classList.add('container-div');
+
         // Create an editable textarea for the note content
         const textarea = document.createElement('textarea');
         textarea.value = note.content;
@@ -43,7 +51,11 @@ export function displayNotes() {
         textarea.addEventListener('input', () => {
             activeNotes[noteIndex].content = textarea.value;
             saveNotes();
+            autoResizeHeight(textarea);
         });
+        setTimeout(function () {
+            autoResizeHeight(textarea);
+        }, 0);
 
         // Create a delete button for the note
         const deleteButton = document.createElement('button');
@@ -53,15 +65,17 @@ export function displayNotes() {
             saveNotes();
             li.remove();
         });
-        const imageDelete = document.createElement('img');
-        imageDelete.src = 'images/delete.svg';
-        imageDelete.alt = 'Delete note';
-        imageDelete.width = 24;
-        imageDelete.height = 24;
-        deleteButton.appendChild(imageDelete);
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.classList.add('svg-icon');
+        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', './images/delete.svg#icon');
+        svg.appendChild(use);
+        deleteButton.appendChild(svg);
 
-        li.appendChild(textarea);
-        li.appendChild(deleteButton);
+        containerDiv.appendChild(textarea);
+        containerDiv.appendChild(deleteButton);
+
+        li.appendChild(containerDiv);
         notesList.appendChild(li);
     });
 
