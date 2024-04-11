@@ -1,7 +1,6 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <link rel="stylesheet" href="base-style.css" />
     <link rel="stylesheet" href="notes.css" />
     <link rel="stylesheet" href="categories.css" />
@@ -10,32 +9,36 @@
     <script type="module" src="js/notes.js"></script>
     <script type="module" src="js/categories.js"></script>
 
-    <title>Quick Notes</title>
-</head>
+    <title>Quick Notes!</title>
+  </head>
 
-<body>
+  <body>
     <div class="page">
-        <div class="main">
-            <div class="sidebar">
-                <h1>Quick Notes</h1>
-                <button id="backButton">
-                    <img src="./images/back.svg" alt="Back" width="24" height="24" />
-                </button>
-                <ul id="categories"></ul>
-                <button id="addCategoryButton">Add</button>
-            </div>
-
-            <!-- Notes Page -->
-            <div class="content" id="notes">
-                <div class="colorBar" id="colorBar"></div>
-                <h2 id="categoriesHeader">Unsorted</h2>
-                <div id="noteList"></div>
-                <button id="addNoteButton">
-                    <img src="./images/addNote.svg" alt="Add Note" width="24" height="24" />
-                </button>
-            </div>
+      <div class="main">
+        <div class="sidebar">
+          <h1>Quick Notes</h1>
+          <button id="backButton">
+            <img src="./images/back.svg" alt="Back" width="24" height="24" />
+          </button>
+          <ul id="categories"></ul>
+          <button id="addCategoryButton">Add</button>
         </div>
-    </div>
-</body>
 
+        <!-- Notes Page -->
+        <div class="content" id="notes">
+          <div class="colorBar" id="colorBar"></div>
+          <h2 id="categoriesHeader">Unsorted</h2>
+          <div id="noteList"></div>
+          <button id="addNoteButton">
+            <img
+              src="./images/addNote.svg"
+              alt="Add Note"
+              width="24"
+              height="24"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
