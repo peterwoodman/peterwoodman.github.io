@@ -4,6 +4,8 @@ import { selectedCategory } from './categories.js';
 
 var activeNotes = [];
 
+var colorBar = null;
+
 
 function saveNotes() {
     localStorage.setItem(`notes_${selectedCategory.name}`, JSON.stringify(activeNotes));
@@ -26,6 +28,9 @@ export function displayNotes() {
     const notesList = document.getElementById('noteList');
     notesList.innerHTML = '';
 
+    if (!colorBar) colorBar = document.getElementById('colorBar');
+    colorBar.className = selectedCategory.color;
+
     activeNotes.forEach((note, noteIndex) => {
         // Create a list item for the note
         const li = document.createElement('li');
@@ -35,7 +40,6 @@ export function displayNotes() {
         const textarea = document.createElement('textarea');
         textarea.value = note.content;
         textarea.placeholder = 'Enter your note here';
-        textarea.classList.add('note-text');
         textarea.addEventListener('input', () => {
             activeNotes[noteIndex].content = textarea.value;
             saveNotes();
@@ -43,13 +47,18 @@ export function displayNotes() {
 
         // Create a delete button for the note
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
         deleteButton.classList.add('delete-button');
         deleteButton.addEventListener('click', () => {
             activeNotes.splice(noteIndex, 1);
             saveNotes();
             li.remove();
         });
+        const imageDelete = document.createElement('img');
+        imageDelete.src = 'images/delete.svg';
+        imageDelete.alt = 'Delete note';
+        imageDelete.width = 24;
+        imageDelete.height = 24;
+        deleteButton.appendChild(imageDelete);
 
         li.appendChild(textarea);
         li.appendChild(deleteButton);

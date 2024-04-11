@@ -1,0 +1,33 @@
+#categories {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category {
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.category:hover {
+    background-color: #ddd;
+}
+
+
+.category-item {
+    cursor: pointer;
+}
+
+.category-item::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    margin-right: 10px;
+    border: 1px solid black;
+}
+
+#addCategoryButton {
+    display: block;
+    margin-top: 10px;
+}
