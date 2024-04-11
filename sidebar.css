@@ -1,3 +1,15 @@
+.sidebar {
+    background-color: var(--base-dark);
+    width: 200px;
+    padding: 20px;
+
+    h1 {
+        color: var(--base-light);
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+}
+
 #categories {
     list-style-type: none;
     padding: 0;

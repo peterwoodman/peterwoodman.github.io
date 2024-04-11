@@ -35,13 +35,6 @@ footer {
     flex: 1;
 }
 
-/* Fixed width sidebar */
-.sidebar {
-    background-color: var(--base-dark);
-    width: 200px;
-    padding: 20px;
-}
-
 .blue::before {
     background-color: blue;
 }
