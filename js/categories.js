@@ -111,7 +111,9 @@ function getParentCategories() {
 function addCategory() {
     const newCategoryName = prompt('Enter the name of the new category');
     if (newCategoryName !== '') {
-        if (!Array.isArray(selectCategory.children)) selectedCategory.children = [];
+        if (!Array.isArray(selectedCategory.children)) {
+            selectedCategory.children = [];
+        }
         selectedCategory.children.push({ name: newCategoryName, color: 'black' });
         renderCategory();
         saveCategories();
