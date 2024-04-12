@@ -17,8 +17,6 @@
     }
 }
 
-
-
 #categories {
     list-style-type: none;
     padding: 0;
@@ -33,19 +31,8 @@
     background-color: #ddd;
 }
 
-
 .category-item {
     cursor: pointer;
-}
-
-.category-item::before {
-    content: '';
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: transparent;
-    margin-right: 10px;
-    border: 1px solid black;
 }
 
 #addCategoryButton {

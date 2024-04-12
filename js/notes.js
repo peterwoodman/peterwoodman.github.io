@@ -4,7 +4,6 @@ import { selectedCategory } from './categories.js';
 
 var activeNotes = [];
 
-var colorBar = null;
 var notesList = null;
 
 
@@ -77,9 +76,6 @@ export function displayNotes() {
 
     notesList = document.getElementById('noteList');
     notesList.innerHTML = '';
-
-    if (!colorBar) colorBar = document.getElementById('colorBar');
-    colorBar.className = selectedCategory.color;
 
     activeNotes.forEach((note, noteIndex) => {
         addDisplayNote(note, noteIndex);

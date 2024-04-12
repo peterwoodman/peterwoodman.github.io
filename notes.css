@@ -49,16 +49,3 @@ textarea:focus {
     border-color: dodgerblue;
     box-shadow: 0 0 5px dodgerblue;
 }
-
-#colorBar {
-    display: inline-block;
-    width: 100%;
-    height: 20px;
-    margin-right: 10px;
-}
-
-#colorBar::before {
-    content: "";
-    display: block;
-    height: 100%;
-}

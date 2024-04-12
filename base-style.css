@@ -35,23 +35,6 @@ footer {
     flex: 1;
 }
 
-.blue::before {
-    background-color: blue;
-}
-
-.green::before {
-    background-color: green;
-}
-
-.gray::before {
-    background-color: gray;
-}
-
-.red::before {
-    background-color: red;
-}
-
-
 select {
     width: 100%;
 }

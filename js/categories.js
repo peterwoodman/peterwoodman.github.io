@@ -52,7 +52,6 @@ function createCategoryListItem(index, category) {
     const li = document.createElement('li');
     li.classList.add('category-item');
     li.textContent = category.name;
-    li.classList.add(category.color);
     categoriesList.appendChild(li);
     li.addEventListener('click', () => {
         path.push(index);
@@ -67,6 +66,12 @@ function clearCategoryList() {
 function renderCategory() {
     const childCategories = selectedCategory.children || [];
     categoriesHeader.textContent = selectedCategory.name;
+    if (path.length > 1) {
+        backButton.style.display = 'block';
+    } else {
+        backButton.style.display = 'none';
+    }
+
     clearCategoryList();
     childCategories.forEach((child, index) => {
         createCategoryListItem(index, child);
@@ -96,25 +101,13 @@ function getParentFromPath() {
     return parent;
 }
 
-function getParentCategories() {
-    let parentCategories = categories.children;
-
-    // Traverse the category tree using the path indices,
-    // excluding the last index to get the parent categories
-    for (let i = 1; i < path.length; i++) {
-        parentCategories = parentCategories[path[i]].children || [];
-    }
-
-    return parentCategories;
-}
-
 function addCategory() {
     const newCategoryName = prompt('Enter the name of the new category');
     if (newCategoryName !== '') {
         if (!Array.isArray(selectedCategory.children)) {
             selectedCategory.children = [];
         }
-        selectedCategory.children.push({ name: newCategoryName, color: 'black' });
+        selectedCategory.children.push({ name: newCategoryName, color: 'blue' });
         renderCategory();
         saveCategories();
     }
@@ -137,5 +130,6 @@ document.addEventListener('DOMContentLoaded', function () {
     backButton.addEventListener('click', () => {
         goBack();
     });
+
 
 });
