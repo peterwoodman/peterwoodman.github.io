@@ -1,50 +1,20 @@
 
-import { loadNotes, displayNotes } from './notes.js';
-
-const defaultCategories =
-{
-    name: 'Unsorted', color: 'gray', children: [
-        {
-            name: 'Work', color: 'blue', children: [
-                { name: 'Meetings', color: 'blue' },
-                { name: 'Projects', color: 'blue' },
-                { name: 'Tasks', color: 'blue' },
-            ]
-        },
-        {
-            name: 'Personal', color: 'green', children: [
-                { name: 'Health', color: 'green' },
-                { name: 'Finance', color: 'green' },
-                { name: 'Hobbies', color: 'green' },
-            ]
-        }
-    ]
-}
-
-var categories = null;
-loadCategories();
+import { displayNotes, noteCount } from './notes.js';
+import { saveData, data } from './storage.js';
 
 var addCategoryButton = null;
 var categoriesHeader = null;
 var categoriesList = null;
 var backButton = null;
-
 export var selectedCategory = null;
-
 var path = [];
-
-function loadCategories() {
-    categories = JSON.parse(localStorage.getItem('categories')) || defaultCategories;
-}
-
-function saveCategories() {
-    localStorage.setItem('categories', JSON.stringify(categories));
-}
 
 function selectCategory(category) {
     selectedCategory = category;
-    loadNotes();
-    displayNotes();
+    if (!Array.isArray(selectedCategory.notes)) {
+        selectedCategory.notes = [];
+    }
+    displayNotes(selectedCategory.notes);
     renderCategory();
 }
 
@@ -84,17 +54,12 @@ function goBack() {
         return;
     }
 
-    // Remove the last index from the path
     path.pop();
-
-    console.log(path);
-
-    // Reset the categories list to render the parent categories
     selectCategory(getParentFromPath());
 }
 
 function getParentFromPath() {
-    let parent = categories;
+    let parent = data;
     for (let i = 1; i < path.length; i++) {
         parent = parent.children[path[i]];
     }
@@ -107,12 +72,43 @@ function addCategory() {
         if (!Array.isArray(selectedCategory.children)) {
             selectedCategory.children = [];
         }
-        selectedCategory.children.push({ name: newCategoryName, color: 'blue' });
+        selectedCategory.children.push({ name: newCategoryName });
         renderCategory();
-        saveCategories();
+        saveData();
     }
 }
 
+function rename() {
+    const newName = prompt('Edit the category name here. Enter "delete" to remove it.', selectedCategory.name);
+    if (newName === null) return;
+    if (newName === 'delete') {
+        deleteCategory();
+    }
+    else if (newName !== '') {
+        console.log(newName);
+        selectedCategory.name = newName;
+        renderCategory();
+        saveData();
+    }
+}
+
+function deleteCategory() {
+    if (path.length === 1) {
+        // Show error: cannot delete root category
+        return;
+    }
+    if (noteCount() > 0) {
+        // Show error: cannot delete category with notes
+        return;
+    }
+
+    const index = path[path.length - 1];
+
+    goBack();
+    selectedCategory.children.splice(index, 1);
+    saveData();
+    renderCategory();
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     categoriesList = document.getElementById('categories');
@@ -121,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
     addCategoryButton = document.getElementById('addCategoryButton');
 
     path.push(0);
-    selectCategory(categories);
+    selectCategory(data);
 
     addCategoryButton.addEventListener('click', () => {
         addCategory();
@@ -131,5 +127,8 @@ document.addEventListener('DOMContentLoaded', function () {
         goBack();
     });
 
+    categoriesHeader.addEventListener('click', () => {
+        rename();
+    });
 
 });

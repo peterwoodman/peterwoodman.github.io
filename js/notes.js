@@ -1,18 +1,16 @@
 
-import { selectedCategory } from './categories.js';
+import { saveData } from './storage.js';
 
-
-var activeNotes = [];
+var activeNotes = null;
 
 var notesList = null;
 
-
-function saveNotes() {
-    localStorage.setItem(`notes_${selectedCategory.name}`, JSON.stringify(activeNotes));
+export function noteCount() {
+    return activeNotes.length;
 }
 
-export function loadNotes() {
-    activeNotes = JSON.parse(localStorage.getItem(`notes_${selectedCategory.name}`)) || [];
+function setNotes(notes) {
+    activeNotes = notes;
 }
 
 function focusLastTextarea() {
@@ -42,7 +40,7 @@ function addDisplayNote(note, noteIndex) {
     textarea.placeholder = 'Enter your note here';
     textarea.addEventListener('input', () => {
         activeNotes[noteIndex].content = textarea.value;
-        saveNotes();
+        saveData();
         autoResizeHeight(textarea);
     });
     setTimeout(function () {
@@ -54,7 +52,7 @@ function addDisplayNote(note, noteIndex) {
     deleteButton.classList.add('delete-button');
     deleteButton.addEventListener('click', () => {
         activeNotes.splice(noteIndex, 1);
-        saveNotes();
+        saveData();
         li.remove();
     });
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -72,11 +70,16 @@ function addDisplayNote(note, noteIndex) {
 }
 
 
-export function displayNotes() {
+export function displayNotes(notes) {
+
+    console.log(notes);
+
+    setNotes(notes);
 
     notesList = document.getElementById('noteList');
     notesList.innerHTML = '';
 
+    console.log(activeNotes);
     activeNotes.forEach((note, noteIndex) => {
         addDisplayNote(note, noteIndex);
     });
